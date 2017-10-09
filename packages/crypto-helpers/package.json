@@ -1,16 +1,14 @@
 {
-  "name": "merkle-tree",
+  "name": "crypto-helpers",
   "version": "1.0.0",
   "description": "",
-  "main": "merkle.js",
+  "main": "crypto.js",
   "scripts": {
     "test": "./node_modules/.bin/jasmine"
   },
-  "author": "Walter Dal Mut <walter.dalmut@gmail.com>",
+  "keywords": [],
+  "author": "",
   "license": "MIT",
-  "dependencies": {
-      "crypto-helpers": "1.0.0"
-  },
   "devDependencies": {
     "jasmine": "^2.8.0"
   }

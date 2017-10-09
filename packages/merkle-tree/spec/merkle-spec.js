@@ -125,7 +125,7 @@ describe("Merkle Tree", () => {
     let l = parseInt(Math.random()*100) + 33;
 
     let tree = [];
-    const hash = require('../../blockchain/crypto').hash;
+    const hash = require('crypto-helpers').hash;
 
     for (let i=0; i<l; i++) {
       tree = add(hash, tree, "test_"+Math.random());
