@@ -4,12 +4,16 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "./node_modules/.bin/jasmine"
   },
   "dependencies": {
-      "merkle-tree": "1.0.0"
+    "merkle-tree": "1.0.0",
+    "crypto-helpers": "1.0.0"
   },
   "keywords": [],
-  "author": "",
-  "license": "ISC"
+  "author": "Walter Dal Mut <walter.dalmut@gmail.com>",
+  "license": "MIT",
+  "devDependencies": {
+    "jasmine": "^2.8.0"
+  }
 }
