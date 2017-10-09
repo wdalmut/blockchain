@@ -1,4 +1,2 @@
-chain.json
 node_modules
-*.key
 *.log

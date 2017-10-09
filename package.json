@@ -1,11 +1,27 @@
 {
   "scripts": {
-    "test": "./node_modules/.bin/jasmine"
+    "test": "jasmine"
   },
   "devDependencies": {
-    "jasmine": "^2.8.0"
+    "jasmine": "^2.8.0",
+    "lerna": "^2.4.0"
   },
   "dependencies": {
     "ramda": "^0.24.1"
-  }
+  },
+  "name": "blockchain-project",
+  "description": "A blockchain (proof of concept) written in JS",
+  "version": "1.0.0",
+  "main": "main.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/wdalmut/blockchain.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/wdalmut/blockchain/issues"
+  },
+  "homepage": "https://github.com/wdalmut/blockchain#readme"
 }
