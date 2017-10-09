@@ -3,6 +3,7 @@ const R = require('ramda'),
   fs = require('fs'),
   crypto = require('crypto-helpers'),
   line  = require('./line'),
+  mine = require('./mine'),
   verify = require('./verify')
 ;
 
@@ -16,26 +17,28 @@ const keys = {
 };
 
 const mySign = R.curry(crypto.sign)(keys.priv);
-const mySignBlock = R.curry(line.signBlock)(mySign, crypto.hash, complexity);
-const addSignedBlock = R.curry(line.addBlock)(mySignBlock);
+const mySignBlock = R.curry(mine.signBlock)(mySign, crypto.hash, complexity);
 
 const createBlockWithMyPublicKey = R.curry(line.createBlock)(keys.pub.toString());
 
 /** create the blockchain **/
 let chain = [];
-chain = addSignedBlock(chain, createBlockWithMyPublicKey(new Date().getTime(), []));
+mySignBlock(createBlockWithMyPublicKey(chain, new Date().getTime(), []), (err, block) => {
+  chain = chain.concat([block]);
+  mySignBlock(createBlockWithMyPublicKey(chain, new Date().getTime(), [{test: true}]), (err, block) => {
+    chain = chain.concat([block]);
+    mySignBlock(createBlockWithMyPublicKey(chain, new Date().getTime(), [{value: 14356}]), (err, block) => {
+      chain = chain.concat([block]);
 
-/** add more transactions **/
-chain = addSignedBlock(chain, createBlockWithMyPublicKey(new Date().getTime(), [{data: "hello"}]));
-chain = addSignedBlock(chain, createBlockWithMyPublicKey(new Date().getTime(), [{data: "world"}]));
-console.log(chain);
+      console.log(JSON.stringify(chain, null , 2));
 
-console.log("");
+      console.log("");
 
-/** Verify blockchain **/
-console.log("isBlockchainValid: ", verify.isBlockchainValid(chain));
+      console.log("isBlockchainValid: ", verify.isBlockchainValid(chain));
 
-/** Tampering **/
-chain[1].data = "hello World";
-console.log("isBlockchainValid: ", verify.isBlockchainValid(chain));
+      chain[1].data = "hello World";
+      console.log("isBlockchainValid: ", verify.isBlockchainValid(chain));
+    });
+  });
+});
 
