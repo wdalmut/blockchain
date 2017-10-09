@@ -1,6 +1,6 @@
-# Blockchain example
+# Blockchain
 
-Just a simple example of a blockchain without external dependencies
+A blockchain (proof of concept) written in JS
 
 ## Generate your key pairs
 
