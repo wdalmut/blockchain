@@ -1,4 +1,4 @@
-const {height, leafs, add} = require('../../blockchain/merkle');
+const {height, leafs, add, clean, top} = require('../../blockchain/merkle');
 
 describe("Merkle Tree", () => {
   it("should compute the tree height", () => {
@@ -89,5 +89,25 @@ describe("Merkle Tree", () => {
       'hash', 'hash',
       'hash'
     ]);
+  });
+
+  it("should drop the merkle tree", () => {
+    let tree = [
+      {hash:'hash', data: 'any data'},{hash:'hash', data: 'any data'},{hash:'hash', data: 'any data'}, '',
+      'hash', 'hash',
+      'hash'
+    ];
+
+    expect(clean(tree)).toEqual(['any data','any data','any data']);
+  });
+
+  it("should expose the top hash", () => {
+    let tree = [
+      {hash:'hash', data: 'any data'},{hash:'hash', data: 'any data'},{hash:'hash', data: 'any data'}, '',
+      'hash', 'hash',
+      'top hash'
+    ];
+
+    expect(top(tree)).toEqual("top hash");
   });
 });

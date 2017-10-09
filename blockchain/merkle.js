@@ -19,6 +19,14 @@ const add = (hash, tree, data) => {
   return nodes;
 };
 
+const clean = (tree) => {
+  return leafs(tree).filter((item) => (item) ? true : false).map((leaf) => leaf.data);
+}
+
+const top = (tree) => {
+  return tree.slice(-1).map((leaf) => (leaf instanceof Object) ? leaf.hash : leaf)[0];
+};
+
 const leafs = (tree) => {
   return tree.slice(0, Math.pow(2, height(tree)-1));
 };
@@ -37,5 +45,7 @@ const height = (tree) => {
 module.exports = {
   height,
   leafs,
+  clean,
   add,
+  top
 };
