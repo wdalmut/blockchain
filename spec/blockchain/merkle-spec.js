@@ -1,4 +1,4 @@
-const {height, leafs, add, clean, top} = require('../../blockchain/merkle');
+const {height, leafs, add, clean, top, validate} = require('../../blockchain/merkle');
 
 describe("Merkle Tree", () => {
   it("should compute the tree height", () => {
@@ -101,6 +101,16 @@ describe("Merkle Tree", () => {
     expect(clean(tree)).toEqual(['any data','any data','any data']);
   });
 
+  it("should drop the merkle tree without padding", () => {
+    let tree = [
+      {hash:'hash', data: 'any data'},{hash:'hash', data: 'any data'},{hash:'hash', data: 'any data'}, '',
+      'hash', 'hash',
+      'hash'
+    ];
+
+    expect(clean(tree, true)).toEqual(['any data','any data','any data', '']);
+  });
+
   it("should expose the top hash", () => {
     let tree = [
       {hash:'hash', data: 'any data'},{hash:'hash', data: 'any data'},{hash:'hash', data: 'any data'}, '',
@@ -109,5 +119,18 @@ describe("Merkle Tree", () => {
     ];
 
     expect(top(tree)).toEqual("top hash");
+  });
+
+  it("should validate a tree", () => {
+    let l = parseInt(Math.random()*100) + 33;
+
+    let tree = [];
+    const hash = require('../../blockchain/crypto').hash;
+
+    for (let i=0; i<l; i++) {
+      tree = add(hash, tree, "test_"+Math.random());
+    }
+
+    expect(validate(hash, tree)).toBe(true);
   });
 });

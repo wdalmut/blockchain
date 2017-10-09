@@ -19,9 +19,36 @@ const add = (hash, tree, data) => {
   return nodes;
 };
 
-const clean = (tree) => {
-  return leafs(tree).filter((item) => (item) ? true : false).map((leaf) => leaf.data);
-}
+const validate = (hash, tree) => {
+  let topHash = top(tree);
+
+  let values = clean(tree); // without empty hashes
+  let nodeHashes = hashes(tree);
+
+  for (let i=0; i<values.length; i++) {
+    if (hash(JSON.stringify(values[i])) != nodeHashes[i]) {
+      return false;
+    }
+  }
+
+  let all = nodeHashes.concat(tree.slice(nodeHashes.length));
+
+  for (let i=0, j=Math.pow(2, height(tree)-1); j<all.length; i+=2, j++) {
+    if (hash(all[i]+all[i+1]) != all[j]) {
+      return false;
+    }
+  };
+
+  return true;
+};
+
+const hashes = (tree) => {
+  return leafs(tree).map((leaf) => (leaf instanceof Object) ? leaf.hash : leaf);
+};
+
+const clean = (tree, notEmpty = false) => {
+  return leafs(tree).filter((item) => (item || notEmpty) ? true : false).map((leaf) => (leaf instanceof Object) ? leaf.data : '');
+};
 
 const top = (tree) => {
   return tree.slice(-1).map((leaf) => (leaf instanceof Object) ? leaf.hash : leaf)[0];
@@ -47,5 +74,6 @@ module.exports = {
   leafs,
   clean,
   add,
-  top
+  top,
+  validate,
 };
