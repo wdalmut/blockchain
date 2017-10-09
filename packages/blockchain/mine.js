@@ -15,7 +15,7 @@ const mine = (hash, complexity, block, callback) => {
   return setImmediate(doHash, hash, complexity, block);
 };
 
-const signBlockAsync = (mySignature, hash, complexity, block, callback) => {
+const signBlock = (mySignature, hash, complexity, block, callback) => {
   mine(hash, complexity, block, (err, verify) => {
     block = Object.assign({}, block, {hash: verify});
     block = Object.assign({}, block, {signature: mySignature(JSON.stringify(block))});
@@ -25,6 +25,6 @@ const signBlockAsync = (mySignature, hash, complexity, block, callback) => {
 };
 
 module.exports = {
-  signBlockAsync,
+  signBlock,
 };
 
