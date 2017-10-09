@@ -7,8 +7,9 @@
     "test": "./node_modules/.bin/jasmine"
   },
   "dependencies": {
+    "crypto-helpers": "1.0.0",
     "merkle-tree": "1.0.0",
-    "crypto-helpers": "1.0.0"
+    "ramda": "^0.25.0"
   },
   "keywords": [],
   "author": "Walter Dal Mut <walter.dalmut@gmail.com>",

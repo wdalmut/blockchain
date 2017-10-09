@@ -1,4 +1,4 @@
-const hash = require('./crypto').hash;
+const hash = require('crypto-helpers').hash;
 
 const createBlock = (publicKey, timestamp, transactions) => {
   return {
