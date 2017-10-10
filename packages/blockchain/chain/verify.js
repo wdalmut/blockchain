@@ -1,5 +1,5 @@
 const crypto = require('crypto-helpers');
-const {verifyBlock} = require('./block/verify');
+const {verifyBlock} = require('./../block/verify');
 
 const isBlockchainValid = (chain) => {
   return isChainCompletelySigned(chain) && isChainCompletelyConnected(chain);
