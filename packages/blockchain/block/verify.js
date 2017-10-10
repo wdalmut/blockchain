@@ -1,3 +1,4 @@
+const crypto = require('crypto-helpers');
 
 const verifyBlock = (data) => {
   return verifyBlockHash(data) && verifyBlockSignature(data);

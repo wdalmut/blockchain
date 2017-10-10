@@ -2,9 +2,9 @@ const R = require('ramda'),
   path = require('path'),
   fs = require('fs'),
   crypto = require('crypto-helpers'),
-  line  = require('./line'),
-  mine = require('./mine'),
-  verify = require('./verify')
+  line  = require('./block'),
+  mine = require('./block/mine'),
+  verify = require('./chain/verify')
 ;
 
 /** Sign block complexity **/
