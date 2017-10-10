@@ -1,6 +1,6 @@
-const helper = require('../../blockchain/line');
+const helper = require('../../block');
 
-describe("Line", () => {
+describe("Block", () => {
   it("should create a block", () => {
     let block = helper.createBlock("test", [], 1, {"test": true});
 
@@ -10,3 +10,4 @@ describe("Line", () => {
     expect(block.transactions).toEqual({test: true});
   });
 });
+

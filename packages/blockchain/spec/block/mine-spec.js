@@ -1,5 +1,5 @@
-const {signBlock} = require('../mine');
-const {createBlock} = require('../line');
+const {createBlock} = require('../../block');
+const {signBlock} = require('../../block/mine');
 
 describe("Mining", () => {
   it("should sign a block asynchrously", (done) => {
