@@ -1,0 +1,18 @@
+{
+  "name": "scheduler",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "./node_modules/.bin/jasmine"
+  },
+  "keywords": [],
+  "author": "Walter Dal Mut <walter.dalmut@gmail.com>",
+  "license": "MIT",
+  "dependencies": {
+    "merkle-tree": "1.0.0"
+  },
+  "devDependencies": {
+    "jasmine": "^2.8.0"
+  }
+}
