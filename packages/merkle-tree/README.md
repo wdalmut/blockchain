@@ -10,6 +10,7 @@ Methods:
  * `clean`
  * `top`
  * `validate`
+ * `remove`
 
 ```js
 const {
@@ -18,7 +19,8 @@ const {
     leafs,
     clean,
     top,
-    validate
+    validate,
+    remove,
 } = require('merkle-tree');
 ```
 
@@ -88,5 +90,11 @@ const h = height(tree); // 1 [one level]
 
 ```js
 const rootHash = top(tree); // 'dbe8265146f2539c6182bd9a203351d3b2377a3f'
+```
+
+## Remove elements
+
+```js
+const newTree = remove(() => 'hash', tree, (item) => (item != 'any data custom') ? true : false);
 ```
 

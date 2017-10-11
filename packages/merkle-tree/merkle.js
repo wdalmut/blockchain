@@ -69,6 +69,16 @@ const height = (tree) => {
   return height;
 };
 
+const remove = (hash, tree, compare) => {
+
+  let hashAdd = ((hash) => (tree, data) => add(hash, tree, data))(hash);
+
+  return clean(tree)
+    .filter(compare)
+    .reduce((memo, transaction) => hashAdd(memo, transaction), [])
+  ;
+};
+
 module.exports = {
   height,
   leafs,
@@ -76,4 +86,5 @@ module.exports = {
   add,
   top,
   validate,
+  remove,
 };

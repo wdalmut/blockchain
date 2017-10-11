@@ -1,4 +1,4 @@
-const {height, leafs, add, clean, top, validate} = require('../');
+const {height, leafs, add, clean, top, validate, remove} = require('../');
 
 describe("Merkle Tree", () => {
   it("should compute the tree height", () => {
@@ -132,5 +132,20 @@ describe("Merkle Tree", () => {
     }
 
     expect(validate(hash, tree)).toBe(true);
+  });
+
+  it("should remove an object", () => {
+    let tree = [
+      {hash:'hash', data: 'any data 1'},{hash:'hash', data: 'any data custom'},{hash:'hash', data: 'any data 2'}, '',
+      'hash', 'hash',
+      'top hash'
+    ];
+
+    tree = remove(() => 'hash', tree, (item) => (item != 'any data custom') ? true : false);
+
+    expect(tree).toEqual([
+      {hash:'hash', data: 'any data 1'},{hash:'hash', data: 'any data 2'},
+      'hash'
+    ]);
   });
 });
