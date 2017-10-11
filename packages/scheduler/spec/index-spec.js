@@ -29,4 +29,22 @@ describe("Transaction scheduler", () => {
       done();
     });
   });
+
+  it("should remove old transactions", () => {
+    const hash = (data) => `hash_${data}`;
+
+    const myScheduler = scheduler(hash, 1);
+
+    myScheduler.add({id: 'one'});
+    myScheduler.add({id: 'two'});
+
+    myScheduler.remove('one');
+
+    expect(myScheduler.getBucket()).toEqual([
+      {
+        data: { id: 'two' },
+        hash: 'hash_{"id":"two"}'
+      }
+    ]);
+  });
 });

@@ -1,4 +1,4 @@
-const { add } = require('merkle-tree');
+const { add, remove } = require('merkle-tree');
 
 module.exports = (hash, time = 60) => {
   let scheduleId = false;
@@ -16,7 +16,13 @@ module.exports = (hash, time = 60) => {
     stop: () => {
       clearInterval(scheduleId);
     },
-    remove: (transaction) => {
+    remove: (id) => {
+      let tree = transactionsBucket;
+      transactionsBucket = [];
+
+      transactionsBucket = remove(hash, tree, (transaction) => (transaction.id == id) ? false : true);
+
+      return transactionsBucket;
     },
     add: (transaction) => {
       transactionsBucket = add(hash, transactionsBucket, transaction);
