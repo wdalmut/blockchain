@@ -9,19 +9,15 @@ function MessageReadable(options) {
   }
 
   Readable.call(this, options);
-
-  this.bucket = [];
 }
+
 util.inherits(MessageReadable, Readable);
 
 MessageReadable.prototype.add = function(payload) {
-  this.bucket.push(payload);
+  this.push(JSON.stringify(payload));
 };
 
 MessageReadable.prototype._read = function() {
-  if (this.bucket.length) {
-    this.push(JSON.stringify(this.bucket.shift()));
-  }
 };
 
 module.exports = MessageReadable;
