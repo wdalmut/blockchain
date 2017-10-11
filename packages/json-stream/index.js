@@ -7,17 +7,36 @@ function JsonTransform(options) {
     return new JsonTransform(options);
   }
   Transform.call(this, options);
+
+  this.pieces = [];
 }
 util.inherits(JsonTransform, Transform);
 
-JsonTransform.prototype._transform = function(chunk, encoding, callback) {
+JsonTransform.prototype.parse = function(buf) {
+  let chunk = false;
+
   try {
-    chunk = JSON.parse(chunk);
-  } catch (exception) {
-    return callback();
+    chunk = JSON.parse(buf);
+  } catch (exception) { }
+
+  return chunk;
+};
+
+JsonTransform.prototype._transform = function(chunk, encoding, callback) {
+  let json = this.parse(chunk)
+  if (json && !this.pieces.length) {
+    return callback(null, json);
   }
 
-  callback(null, chunk);
+  this.pieces.push(chunk);
+
+  json = this.parse(Buffer.concat(this.pieces))
+  if (json) {
+    this.pieces = [];
+    return callback(null, json);
+  }
+
+  callback();
 };
 
 module.exports = JsonTransform;
