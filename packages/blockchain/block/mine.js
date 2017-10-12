@@ -14,6 +14,7 @@ const mine = (hash, complexity, block, callback) => {
 
     if (verify.slice(0, complexity) != Array.apply(null, Array(complexity)).map(() => 0).join('')) {
       abortId = setImmediate(doHash, hash, complexity, block);
+      return;
     }
 
     return callback(undefined, Object.assign({}, block, {hash: verify}));
