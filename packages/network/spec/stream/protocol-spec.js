@@ -9,8 +9,8 @@ describe("Protocol", () => {
 
     a
       .pipe(protocol())
-      .on('block', done)
-      .on('transaction', fail)
+      .on('message.block', done)
+      .on('message.transaction', fail)
     ;
   });
 
@@ -21,8 +21,8 @@ describe("Protocol", () => {
 
     a
       .pipe(protocol())
-      .on('transaction', done)
-      .on('block', fail)
+      .on('message.transaction', done)
+      .on('message.block', fail)
     ;
   });
 });

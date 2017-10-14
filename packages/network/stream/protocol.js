@@ -12,17 +12,11 @@ function ProtocolTransform(options) {
 util.inherits(ProtocolTransform, Transform);
 
 ProtocolTransform.prototype._transform = function(chunk, encoding, callback) {
-  switch (chunk.type) {
-    case 'block':
-      this.emit('block', chunk.data);
-      break;
-    case 'transaction':
-      this.emit('transaction', chunk.data);
-      break;
+  if (chunk.hasOwnProperty('type')) {
+    this.emit(`message.${chunk.type}`, chunk.data);
   }
 
-  this.push(chunk);
-  callback();
+  callback(null, chunk);
 };
 
 module.exports = ProtocolTransform;
