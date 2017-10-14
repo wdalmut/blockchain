@@ -4,17 +4,21 @@ module.exports = (hash, time = 60) => {
   let scheduleId = false;
   let transactionsBucket = [];
 
-  return {
-    start: (callback) => {
-      scheduleId = setInterval(() => {
-        let available = transactionsBucket;
-        transactionsBucket = [];
+  const register = (callback) => {
+    scheduleId = setTimeout(() => {
+      let available = transactionsBucket;
+      transactionsBucket = [];
 
-        callback(available);
-      }, time);
-    },
+      register(callback);
+
+      setImmediate(callback, available);
+    }, time);
+  };
+
+  return {
+    start: register,
     stop: () => {
-      clearInterval(scheduleId);
+      clearTimeout(scheduleId);
     },
     remove: (id) => {
       let tree = transactionsBucket;

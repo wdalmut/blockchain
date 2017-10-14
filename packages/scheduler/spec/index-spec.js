@@ -22,10 +22,11 @@ describe("Transaction scheduler", () => {
     expect(myScheduler.getBucket().length).toEqual(3);
 
     myScheduler.start((tree) => {
+      myScheduler.stop();
+
       expect(tree.length).toEqual(3);
       expect(myScheduler.getBucket()).toEqual([]);
 
-      myScheduler.stop();
       done();
     });
   });
