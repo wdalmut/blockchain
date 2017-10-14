@@ -1,0 +1,22 @@
+{
+  "name": "knot",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "./node_modules/.bin/jasmine"
+  },
+  "keywords": [],
+  "author": "Walter Dal Mut <walter.dalmut@gmail.com>",
+  "license": "MIT",
+  "devDependencies": {
+    "jasmine": "^2.8.0"
+  },
+  "dependencies": {
+    "crypto-helpers": "1.0.0",
+    "network": "1.0.0",
+    "ramda": "^0.25.0",
+    "scheduler": "1.0.0",
+    "blockchain": "1.0.0"
+  }
+}
