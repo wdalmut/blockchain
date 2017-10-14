@@ -5,13 +5,13 @@ module.exports = (hash, time = 60) => {
   let transactionsBucket = [];
 
   const register = (callback) => {
-    scheduleId = setTimeout(() => {
+    scheduleId = setTimeout(function() {
       let available = transactionsBucket;
       transactionsBucket = [];
 
-      register(callback);
-
       setImmediate(callback, available);
+
+      register(callback);
     }, time);
   };
 
