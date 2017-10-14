@@ -21,7 +21,7 @@ describe("Transaction scheduler", () => {
 
     expect(myScheduler.getBucket().length).toEqual(3);
 
-    myScheduler.start((tree) => {
+    myScheduler.start((tree, go) => {
       myScheduler.stop();
 
       expect(tree.length).toEqual(3);

@@ -9,9 +9,11 @@ module.exports = (hash, time = 60) => {
       let available = transactionsBucket;
       transactionsBucket = [];
 
-      setImmediate(callback, available);
+      const go = () => {
+        register(callback);
+      };
 
-      register(callback);
+      setImmediate(callback, available, go);
     }, time);
   };
 
