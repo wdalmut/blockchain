@@ -1,20 +1,18 @@
 # Network module
 
 ```js
-const EventManager = require('events'),
-    MessageStream = require('network/stream/message'),
+const MessageStream = require('network/stream/message'),
     {connectPeer} = require('network/peer'),
     network = require('network');
 
-const events = new EventManager();
 const messageBox = new MessageStream();
 
-events.on('raw.data', console.log);
-events.on('block.mined', console.log);
-events.on('transaction.append', console.log);
-events.on('chain.from', console.log);
+messageBox.on('raw.data', console.log);
+messageBox.on('block.mined', console.log);
+messageBox.on('transaction.append', console.log);
+messageBox.on('chain.from', console.log);
 
-const addPeer = R.curry(connectPeer)(events, messageBox);
+const addPeer = R.curry(connectPeer)(messageBox);
 
 p2p = network(addPeer);
 
