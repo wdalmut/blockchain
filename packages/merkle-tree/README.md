@@ -76,8 +76,8 @@ const l = clean(tree); // ['any data']
 When your tree is padded to be a complete tree
 
 ```js
-const l = clean(tree); // ['any data', 'any data', '']
-const e = clean(tree, true); // ['any data', 'any data']
+const l = clean(tree); // ['any data', 'any data']
+const e = clean(tree, true); // ['any data', 'any data', '']
 ```
 
 ## Get tree height
