@@ -91,6 +91,12 @@ describe("Merkle Tree", () => {
     ]);
   });
 
+  it("should clean an empty tree", () => {
+    let tree = [];
+
+    expect(clean(tree)).toEqual([]);
+  });
+
   it("should drop the merkle tree", () => {
     let tree = [
       {hash:'hash', data: 'any data'},{hash:'hash', data: 'any data'},{hash:'hash', data: 'any data'}, '',
