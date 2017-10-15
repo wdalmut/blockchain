@@ -3,7 +3,9 @@ const {hash} = require('crypto-helpers'),
   network = require('network'),
   {connectPeer} = require('network/peer'),
   {createBlockMinedMessage} = require('network/message'),
-  blackhole = require('network/stream/blackhole')
+  blackhole = require('network/stream/blackhole'),
+  merkle = require('merkle-tree'),
+  transaction = require('blockchain/transaction')
 ;
 
 module.exports = (message) => {
@@ -21,19 +23,30 @@ module.exports = (message) => {
   message.stream.on('transaction.append', miner.add);
 
   message.stream.on('block.mined', (block) => {
-      let chain = message.chain.concat([block]);
+    let transactions = block.transactions;
 
-      if (!message.isBlockchainValid(chain)) {
-        console.log("invalid blockchain with block", block);
-        return;
-      }
+    if(!merkle.validate(hash, transactions)) {
+      console.log("Invalid blockchain with block (merkle-tree)", block);
+      return;
+    }
 
-      message.chain = chain;
+    if(!(transaction.verifyAllTransactions(merkle.clean(transactions)))) {
+      console.log("invalid blockchain with block (transaction verify)", block);
+      return;
+    }
 
-      console.log(JSON.stringify(message.chain, null, 2));
+    let chain = message.chain.concat([block]);
 
+    if (!message.isBlockchainValid(chain)) {
+      console.log("invalid blockchain with block", block);
+      return;
+    }
 
-      message.stream.add(createBlockMinedMessage(block));
+    message.chain = chain;
+
+    console.log(JSON.stringify(message.chain, null, 2));
+
+    message.stream.add(createBlockMinedMessage(block));
   });
 
   miner.start((transactions, done) => {
@@ -51,5 +64,7 @@ module.exports = (message) => {
 
     message.stream.on('block.mined', abort);
   });
+
+  return miner;
 };
 

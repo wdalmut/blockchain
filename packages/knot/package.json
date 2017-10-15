@@ -17,6 +17,7 @@
     "network": "1.0.0",
     "ramda": "^0.25.0",
     "scheduler": "1.0.0",
-    "blockchain": "1.0.0"
+    "blockchain": "1.0.0",
+    "merkle-tree": "1.0.0"
   }
 }
