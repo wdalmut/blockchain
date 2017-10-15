@@ -10,10 +10,10 @@ const createTransaction = (publicKey, signature, data) => {
   };
 
   // compute id as twice SHA-256
-  transaction = Object.assign(transaction, {id: hash(hash(JSON.stringify(transaction)))});
+  transaction = Object.assign({}, transaction, {id: hash(hash(JSON.stringify(transaction)))});
 
   // Hash the whole transaction
-  transaction = Object.assign(transaction, {hash: hash(JSON.stringify(transaction))});
+  transaction = Object.assign({}, transaction, {hash: hash(JSON.stringify(transaction))});
 
   // Sign the whole transaction
   return Object.assign({}, transaction, {signature: signature(JSON.stringify(transaction))});
@@ -23,11 +23,11 @@ const verifyTransaction = (transaction) =>
   verify(
     transaction.publicKey,
     transaction.signature,
-    JSON.stringify(Object.assign(transaction, {signature: 0x0}))
+    JSON.stringify(Object.assign({}, transaction, {signature: 0x0}))
   ) && (
     transaction.hash
       ==
-    hash((JSON.stringify(Object.assign(transaction, {signature: 0x0, hash: 0x0}))))
+    hash((JSON.stringify(Object.assign({}, transaction, {signature: 0x0, hash: 0x0}))))
   )
 ;
 
