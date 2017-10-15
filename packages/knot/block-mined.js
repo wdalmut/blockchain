@@ -1,6 +1,7 @@
 const merkle = require('merkle-tree'),
   {createBlockMinedMessage} = require('network/message'),
-  transaction = require('blockchain/transaction')
+  transaction = require('blockchain/transaction'),
+  {hash} = require('crypto-helpers')
 ;
 
 module.exports = (message) => (block) => {

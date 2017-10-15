@@ -3,7 +3,8 @@ const {hash} = require('crypto-helpers'),
   network = require('network'),
   {connectPeer} = require('network/peer'),
   blackhole = require('network/stream/blackhole'),
-  blockMined = require('./block-mined')
+  blockMined = require('./block-mined'),
+  chainFrom = require('./chain-from')
 ;
 
 module.exports = (message) => {
@@ -19,8 +20,9 @@ module.exports = (message) => {
   const miner = scheduler(hash, 5 * 1000);
 
   message.stream.on('transaction.append', miner.add);
-
   message.stream.on('block.mined', blockMined(message));
+  message.stream.on('chain.from', chainFrom(message));
+  message.stream.on('chain.partial', console.log);
 
   miner.start((transactions, done) => {
     let abort = message.sign(message.createBlock(message.chain, new Date().getTime(), transactions), (err, block) => {

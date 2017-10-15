@@ -12,7 +12,7 @@ module.exports = (keys) => {
   const signature = R.curry(crypto.sign)(keys.priv);
 
   return {
-    sign: R.curry(mine.signBlock)(signature, crypto.hash, 1),
+    sign: R.curry(mine.signBlock)(signature, crypto.hash, 5),
     createBlock: R.curry(line.createBlock)(keys.pub.toString()),
     isBlockValid: verifyBlock,
     isBlockchainValid: isBlockchainValid,
