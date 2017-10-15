@@ -1,4 +1,4 @@
-const { from, apart } = require('../../chain');
+const { from, apart, cut } = require('../../chain');
 
 describe("Chain", () => {
   it("should return from a index", () => {
@@ -23,5 +23,11 @@ describe("Chain", () => {
    let chain = [1];
 
     expect(apart(chain)).toEqual([1]);
+  });
+
+  it("should find an element", () => {
+   let chain = [1,2,3,4,5,6,7,8,9,];
+
+    expect(cut(chain, (item) => item === 5)).toEqual([5,6,7,8,9,]);
   });
 });

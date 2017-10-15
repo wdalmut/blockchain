@@ -14,7 +14,24 @@ const apart = (chain) => {
   return middle([], chain);
 };
 
+const cut = (chain, isEqual) => {
+  let capture = false
+
+  return chain.reduce((memo, block) => {
+    if (isEqual(block)) {
+      capture = true;
+    }
+
+    if (capture) {
+      return memo.concat([block]);
+    }
+
+    return memo;
+  }, []);
+};
+
 module.exports = {
   from,
   apart,
+  cut,
 };
