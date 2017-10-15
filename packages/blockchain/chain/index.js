@@ -14,11 +14,12 @@ const apart = (chain) => {
   return middle([], chain);
 };
 
-const cut = (chain, isEqual) => {
+const cut = (chain, testFn) => {
   let capture = false
 
   return chain.reduce((memo, block) => {
-    if (isEqual(block)) {
+    capture = false;
+    if (testFn(block)) {
       capture = true;
     }
 

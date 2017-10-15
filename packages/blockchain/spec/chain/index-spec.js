@@ -28,6 +28,12 @@ describe("Chain", () => {
   it("should find an element", () => {
    let chain = [1,2,3,4,5,6,7,8,9,];
 
-    expect(cut(chain, (item) => item === 5)).toEqual([5,6,7,8,9,]);
+    expect(cut(chain, (item) => item >= 5)).toEqual([5,6,7,8,9,]);
+  });
+
+  it("should find an element and return the first part of the chain", () => {
+   let chain = [1,2,3,4,5,6,7,8,9,];
+
+    expect(cut(chain, (item) => item < 5)).toEqual([1,2,3,4]);
   });
 });
