@@ -1,4 +1,9 @@
-const {connectPeer, createFromMessage, createBlockMinedMessage, createTransactionAppendMessage} = require('../../message');
+const {
+  createFromMessage,
+  createBlockMinedMessage,
+  createTransactionAppendMessage,
+  createPartialChainMessage,
+} = require('../../message');
 
 describe("Messages", () => {
   it("should create a transaction append message", () => {
@@ -11,6 +16,10 @@ describe("Messages", () => {
 
   it("should create a transaction append message", () => {
     expect(createFromMessage({})).toEqual({type: "from", data: {}});
+  });
+
+  it("should create a partial chain message", () => {
+    expect(createPartialChainMessage([4,5,6])).toEqual({type: "partial", data: [4,5,6]});
   });
 });
 
