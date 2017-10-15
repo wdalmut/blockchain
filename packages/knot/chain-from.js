@@ -7,7 +7,7 @@ module.exports = (message) => (blocks) => {
 
   for (let i=0; i<blocks.length; i++) {
     let block = blocks[i];
-    let cuttedChain = cut(fromChain, ((block) => (chainBlock) => chainBlock.index == block.index)(block))
+    let cuttedChain = cut(fromChain, ((block) => (chainBlock) => chainBlock.index >= block.index)(block))
 
     if (cuttedChain.length) {
       fromChain = cuttedChain;

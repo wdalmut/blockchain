@@ -21,9 +21,7 @@ module.exports = (message) => (block) => {
     return message.stream.emit('error.block.mined', block);
   }
 
-  message.chain = chain;
-
-  console.log(JSON.stringify(message.chain, null, 2));
+  message.stream.emit('chain.partial', chain.slice(-2));
 
   message.stream.add(createBlockMinedMessage(block));
 };
