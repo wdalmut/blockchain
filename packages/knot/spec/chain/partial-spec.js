@@ -1,12 +1,24 @@
-const message = require('network/stream/message'),
-  chainPartial = require('../chain-partial')
-;
+const message = require('network/stream/message');
 
 describe("Chain Partial", () => {
-  let m = null
+  let m = null;
+  let chainPartial = null;
+  let isBlockchainValid = null;
+  let verify = require('blockchain/chain/verify');
+
+  beforeEach(() => {
+    isBlockchainValid = verify.isBlockchainValid;
+    verify.isBlockchainValid = () => true;
+
+    chainPartial = require('../../chain/partial')
+  });
+
+  afterEach(() => {
+    verify.isBlockchainValid = isBlockchainValid;
+  });
 
   beforeEach(() =>{
-    m = {stream: message(), chain: [], isBlockchainValid: () => true};
+    m = {stream: message(), chain: []};
   });
 
   it("should update with a new chain an empty", (done) => {

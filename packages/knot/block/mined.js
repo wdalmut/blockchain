@@ -1,6 +1,7 @@
 const merkle = require('merkle-tree'),
   {createBlockMinedMessage} = require('network/message'),
   transaction = require('blockchain/transaction'),
+  {isBlockchainValid} = require('blockchain/chain/verify'),
   {hash} = require('crypto-helpers')
 ;
 
@@ -17,7 +18,7 @@ module.exports = (message) => (block) => {
 
   let chain = message.chain.concat([block]);
 
-  if (!message.isBlockchainValid(chain)) {
+  if (!isBlockchainValid(chain)) {
     return message.stream.emit('error.block.mined', block);
   }
 

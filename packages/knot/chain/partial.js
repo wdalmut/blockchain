@@ -1,4 +1,5 @@
-const {cut} = require('blockchain/chain')
+const {cut} = require('blockchain/chain'),
+  {isBlockchainValid} = require('blockchain/chain/verify')
 ;
 
 module.exports = (message) => (blocks) => {
@@ -11,7 +12,7 @@ module.exports = (message) => (blocks) => {
 
     chain = halfChain.concat(blocks);
 
-    if (!message.isBlockchainValid(chain)) {
+    if (!isBlockchainValid(chain)) {
       return message.stream.emit('chain.update.invalid', blocks);
     }
 

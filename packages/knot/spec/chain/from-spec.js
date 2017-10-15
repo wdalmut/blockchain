@@ -1,5 +1,5 @@
 const message = require('network/stream/message'),
-  chainFrom = require('../chain-from');
+  chainFrom = require('../../chain/from');
 
 describe("Chain From", () => {
   let m = null

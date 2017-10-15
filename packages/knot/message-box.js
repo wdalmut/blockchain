@@ -1,22 +1,17 @@
 const R = require('ramda'),
-  crypto = require('crypto-helpers'),
-  line  = require('blockchain/block'),
-  mine = require('blockchain/block/mine'),
-  {verifyBlock} = require('blockchain/block/verify'),
-  {isBlockchainValid} = require('blockchain/chain/verify'),
-  message = require('network/stream/message')
+  message = require('network/stream/message'),
+  blackhole = require('network/stream/blackhole')
 ;
 
 
 module.exports = (keys) => {
-  const signature = R.curry(crypto.sign)(keys.priv);
+
+  const stream = message();
+
+  stream.pipe(blackhole());
 
   return {
-    sign: R.curry(mine.signBlock)(signature, crypto.hash, 6),
-    createBlock: R.curry(line.createBlock)(keys.pub.toString()),
-    isBlockValid: verifyBlock,
-    isBlockchainValid: isBlockchainValid,
-    stream: message(),
+    stream: stream,
     chain: [],
   };
 };
