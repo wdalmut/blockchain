@@ -1,4 +1,5 @@
 const { add, remove } = require('merkle-tree');
+const {verifyTransaction} = require('blockchain/transaction');
 
 module.exports = (hash, time = 60) => {
   let scheduleId = false;
@@ -31,8 +32,12 @@ module.exports = (hash, time = 60) => {
       return transactionsBucket;
     },
     add: (transaction) => {
-      transactionsBucket = add(hash, transactionsBucket, transaction);
-      return transactionsBucket;
+      if (verifyTransaction(transaction)) {
+        transactionsBucket = add(hash, transactionsBucket, transaction);
+        return true;
+      }
+
+      return false;
     },
     getBucket: () => {
       return transactionsBucket.slice();

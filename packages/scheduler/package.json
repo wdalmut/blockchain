@@ -10,7 +10,9 @@
   "author": "Walter Dal Mut <walter.dalmut@gmail.com>",
   "license": "MIT",
   "dependencies": {
-    "merkle-tree": "1.0.0"
+    "merkle-tree": "1.0.0",
+    "blockchain": "1.0.0",
+    "crypto-helpers": "1.0.0"
   },
   "devDependencies": {
     "jasmine": "^2.8.0"

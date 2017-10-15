@@ -1,14 +1,39 @@
 const scheduler = require('../');
+const {sign, hash} = require('crypto-helpers');
+const {createTransaction} = require('blockchain/transaction');
 
 describe("Transaction scheduler", () => {
+  let keys = {};
+  let mySignature = () => '';
+
+  beforeEach(() => {
+        keys = {
+      priv: `-----BEGIN EC PRIVATE KEY-----
+MHQCAQEEIMFXriqA9nZG1rw5oRNW5Phu8csodj9p8vaAJdy7u+VsoAcGBSuBBAAK
+oUQDQgAESmMJ3U7H/G8nRVn6MoNy/xxYU4DHJd6KsfqpuIoSPk4CIBbI4zyClzzO
+MlyfhZQ32LD4Wi4yyrvAJkdo09Ba8Q==
+-----END EC PRIVATE KEY-----`,
+      pub: `-----BEGIN PUBLIC KEY-----
+MFYwEAYHKoZIzj0CAQYFK4EEAAoDQgAESmMJ3U7H/G8nRVn6MoNy/xxYU4DHJd6K
+sfqpuIoSPk4CIBbI4zyClzzOMlyfhZQ32LD4Wi4yyrvAJkdo09Ba8Q==
+-----END PUBLIC KEY-----`,
+    }
+
+    mySignature = ((privateKey) => {
+      return (data) => {
+        return sign(privateKey, data);
+      };
+    })(keys.priv);
+  });
+
   it("should add transactions", () => {
     const hash = (data) => `hash_${data}`;
 
     const myScheduler = scheduler(hash);
 
-    let bucket = myScheduler.add('any data');
+    let bucket = myScheduler.add(createTransaction(keys.pub, mySignature, 'any data'));
 
-    expect(bucket).toEqual([{hash: "hash_\"any data\"", data: "any data"}]);
+    expect(bucket).toBe(true);
   });
 
   it("should schedule at fixed rate", (done) => {
@@ -16,8 +41,8 @@ describe("Transaction scheduler", () => {
 
     const myScheduler = scheduler(hash, 1);
 
-    myScheduler.add('any data');
-    myScheduler.add('any data');
+    myScheduler.add(createTransaction(keys.pub, mySignature, 'any data'));
+    myScheduler.add(createTransaction(keys.pub, mySignature, 'any data'));
 
     expect(myScheduler.getBucket().length).toEqual(3);
 
@@ -32,20 +57,13 @@ describe("Transaction scheduler", () => {
   });
 
   it("should remove old transactions", () => {
-    const hash = (data) => `hash_${data}`;
-
     const myScheduler = scheduler(hash, 1);
 
-    myScheduler.add({id: 'one'});
-    myScheduler.add({id: 'two'});
+    myScheduler.add(createTransaction(keys.pub, mySignature, 'one'));
+    myScheduler.add(createTransaction(keys.pub, mySignature, 'two'));
 
-    myScheduler.remove('one');
+    myScheduler.remove(myScheduler.getBucket()[0].data.id);
 
-    expect(myScheduler.getBucket()).toEqual([
-      {
-        data: { id: 'two' },
-        hash: 'hash_{"id":"two"}'
-      }
-    ]);
+    expect(myScheduler.getBucket()[0].data.data).toEqual("two");
   });
 });
