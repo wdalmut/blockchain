@@ -31,9 +31,13 @@ const verifyTransaction = (transaction) =>
   )
 ;
 
+const verifyAllTransactions = (transactions) => {
+  return transactions.map(verifyTransaction).reduce((memo, verify) => memo && verify, true);
+};
+
 module.exports = {
   createTransaction,
   verifyTransaction,
+  verifyAllTransactions,
 };
-
 
